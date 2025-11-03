@@ -30,14 +30,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         );
 
-        Employee saveDEmployee = employeeRepository.save(employee);
+        Employee savedEmployee = employeeRepository.save(employee);
 
         EmployeeDto savedEmployeeDto = new EmployeeDto(
-                saveDEmployee.getId(),
-                saveDEmployee.getFirstName(),
-                saveDEmployee.getLastName(),
-                saveDEmployee.getEmail(),
-                 saveDEmployee.getDepartmentCode()
+                savedEmployee.getId(),
+                savedEmployee.getFirstName(),
+                savedEmployee.getLastName(),
+                savedEmployee.getEmail(),
+                 savedEmployee.getDepartmentCode()
         );
 
         return savedEmployeeDto;
@@ -78,40 +78,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return apiResponseDto;
 
-    }
-
-    @Override
-    public EmployeeDto updateEmployee(Long id, EmployeeDto employeeDto) {
-        for(Employee e:employeeRepository.findAll()){
-            if(e.getDepartmentCode().equals(id)){
-                Employee updatedEmployee = employeeRepository.findById(id).get();
-                updatedEmployee.setFirstName(employeeDto.getFirstName());
-                updatedEmployee.setLastName(employeeDto.getLastName());
-                updatedEmployee.setEmail(employeeDto.getEmail());
-                updatedEmployee.setDepartmentCode(employeeDto.getDepartmentCode());
-                employeeRepository.save(updatedEmployee);
-                EmployeeDto savedEmployeeDto=new EmployeeDto(
-                        updatedEmployee.getId(),
-                        updatedEmployee.getFirstName(),
-                        updatedEmployee.getLastName(),
-                        updatedEmployee.getEmail(),
-                        updatedEmployee.getDepartmentCode()
-                );
-                return savedEmployeeDto;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public String deleteEmployee(Long id) {
-        for(Employee e:employeeRepository.findAll()){
-            if(e.getId().equals(id)){
-                employeeRepository.deleteById(id);
-                return "Employee with code "+id+" deleted";
-            }
-        }
-        return "Employee with code "+id+" not found";
     }
 }
 
